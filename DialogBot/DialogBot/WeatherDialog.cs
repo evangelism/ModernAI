@@ -24,9 +24,17 @@ namespace DialogBot
         public async Task MessageReceivedAsync(IDialogContext context, IAwaitable<Message> argument)
         {
             var message = await argument;
-            var repl = await Reply(message.Text);
-            await context.PostAsync(repl);
-            context.Wait(MessageReceivedAsync);
+            if (message.Text.ToLower().Contains("subscribe"))
+            {
+                PromptDialog.Confirm(context, Subscribe,
+                    $"Do you want to subscribe to weather into in {WP.Location}?");
+            }
+            else
+            {
+                var repl = await Reply(message.Text);
+                await context.PostAsync(repl);
+                context.Wait(MessageReceivedAsync);
+            }
         }
 
         async Task<string> Reply(string msg)
@@ -64,6 +72,20 @@ Example of commands include:
             }
             if (sb.Length == 0) return "I do not understand";
             else return sb.ToString();
+        }
+
+        private async Task Subscribe(IDialogContext context, IAwaitable<bool> result)
+        {
+            var ans = await result;
+            if (ans)
+            {
+                await context.PostAsync("You are subscribed");
+            }
+            else
+            {
+                await context.PostAsync("Subscription cancelled");
+            }
+            context.Wait(MessageReceivedAsync);
         }
 
         string NextTo(string[] str, string pat)
