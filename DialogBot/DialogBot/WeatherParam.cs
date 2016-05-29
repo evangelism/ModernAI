@@ -5,8 +5,10 @@ using System.Web;
 
 namespace DialogBot
 {
+    [Serializable]
     public enum Measurement { Temp = 1, Humidity = 2, Pressure = 4, None = 0 };
 
+    [Serializable]
     public class WeatherParam
     {
         public DateTime When { get; set; }
