@@ -8,8 +8,8 @@ using System.Web.Http.Description;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Utilities;
 using Newtonsoft.Json;
-using SimpleCommandBot.OpenWeatherMap;
 using System.Text;
+using MSEvangelism.OpenWeatherMap;
 
 namespace SimpleCommandBot
 {
@@ -64,9 +64,9 @@ namespace SimpleCommandBot
             string whens = "today";
             Measurement mes = Measurement.None;
             var a = msg.ToLower().Split(' ');
-            if (IsPresent(a, "about") || IsPresent(a,"help"))
+            if (IsPresent(a,"help"))
             {
-                return @"This is a simple weather bot for Moscow.
+                return @"This is a simple weather bot.
 Example of commands include:
   temperature today
   temperature in Moscow
