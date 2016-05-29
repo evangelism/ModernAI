@@ -1,6 +1,9 @@
-﻿using System;
+﻿using MSEvangelism.OpenWeatherMap;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace SimpleDialogBot
@@ -44,5 +47,29 @@ namespace SimpleDialogBot
                 return (int)(((float)(When - DateTime.Now).Hours) / 24.0 + 0.5) ;
             }
         }
+
+        public async Task<string> BuildResult()
+        {
+            WeatherClient OWM = new WeatherClient("88597cb7a556c191905de0f52f23d7d6");
+            var res = await OWM.Forecast(Location);
+            var r = res[Offset];
+            StringBuilder sb = new StringBuilder();
+            if (Measure(Measurement.Temp))
+            {
+                sb.Append($"The temperature on {r.Date} in {Location} is {r.Temp}\r\n");
+            }
+            if (Measure(Measurement.Pressure))
+            {
+                sb.Append($"The pressure on {r.Date} in {Location} is {r.Pressure}\r\n");
+            }
+            if (Measure(Measurement.Humidity))
+            {
+                sb.Append($"Humidity on {r.Date} in {Location} is {r.Humidity}\r\n");
+            }
+            if (sb.Length == 0) return "I do not understand";
+            else return sb.ToString();
+        }
+
+
     }
 }

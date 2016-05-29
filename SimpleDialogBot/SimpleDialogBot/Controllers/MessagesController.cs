@@ -38,7 +38,6 @@ namespace SimpleDialogBot
         }
 
         WeatherParam WP = new WeatherParam();
-        WeatherClient OWM = new WeatherClient("88597cb7a556c191905de0f52f23d7d6");
 
         async Task<string> Reply(string msg)
         {
@@ -57,23 +56,7 @@ Example of commands include:
             if (IsPresent(a, "today")) { WP.Today(); }
             if (IsPresent(a, "tomorrow")) { WP.Tomorrow(); }
             if (NextTo(a, "in") != "") WP.Location = NextTo(a, "in");
-            var res = await OWM.Forecast(WP.Location);
-            var r = res[WP.Offset];
-            StringBuilder sb = new StringBuilder();
-            if (WP.Measure(Measurement.Temp))
-            {
-                sb.Append($"The temperature on {r.Date} in {WP.Location} is {r.Temp}\r\n");
-            }
-            if (WP.Measure(Measurement.Pressure))
-            {
-                sb.Append($"The pressure on {r.Date} in {WP.Location} is {r.Pressure}\r\n");
-            }
-            if (WP.Measure(Measurement.Humidity))
-            {
-                sb.Append($"Humidity on {r.Date} in {WP.Location} is {r.Humidity}\r\n");
-            }
-            if (sb.Length == 0) return "I do not understand";
-            else return sb.ToString();
+            return await WP.BuildResult();
         }
 
         string NextTo(string[] str, string pat)
