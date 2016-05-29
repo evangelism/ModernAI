@@ -1,8 +1,13 @@
-# ModernAI
-Materials for Modern AI Course / Cloud Day 2.0 
+﻿# Modern AI / Cloud Day 2.0
+### Искусственный интеллект в облаке
 
-## ������� / ������������ ������
+Материалы для облачного дня 2.0
 
-1. SimpleCommandBot
-2. SimpleDialogBot
-3. DialogBot
+## Полезные ссылки
+  * [Microsoft Bot Framework](http://botframework.com)
+
+## Примеры кода
+
+  1. [SimpleCommandBot](SimpleCommandBot) - простейший чат-бот, управляемый командами
+  2. [SimpleDialogBot](SimpleDialogBot) - простейший бот, сохраняющий состояние для ведения диалога
+  3. [DialogBot](DialogBot) - бот, использующий диалоги Microsoft Bot Framework 
