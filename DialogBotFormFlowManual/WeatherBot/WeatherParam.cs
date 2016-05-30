@@ -1,28 +1,48 @@
-﻿using MSEvangelism.OpenWeatherMap;
+﻿using Microsoft.Bot.Builder.FormFlow;
+using MSEvangelism.OpenWeatherMap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.Bot.Builder.Dialogs;
 
-namespace DialogBot
+namespace WeatherBot
 {
-    [Serializable]
-    public enum Measurement { Temp = 1, Humidity = 2, Pressure = 4, None = 0 };
+   public enum Measurement { Temp = 1, Humidity = 2, Pressure = 4, None = 0 };
 
     [Serializable]
     public class WeatherParam
     {
-        public DateTime When { get; set; }
+        public static IForm<WeatherParam> BuildForm()
+        {
+            return new FormBuilder<WeatherParam>()
+                .Message("Welcome to weather bot")
+                .Field(nameof(Location))
+                .Message("Good choice!")
+                .AddRemainingFields()
+                .Confirm("Do you want to subscribe to weather?")
+                .OnCompletionAsync(Subscribe)
+                .Build();
+        }
+
+        private async static Task Subscribe(IDialogContext context, WeatherParam WP)
+        {
+            await context.PostAsync(await WP.BuildResult());
+        }
+
+        [Prompt("Please enter location to get weather in")]
         public string Location { get; set; }
+
+        public DateTime When { get; set; }
         public Measurement MeasurementType { get; set; }
         public WeatherParam()
         {
-            Location = "Moscow";
             When = DateTime.Now;
             MeasurementType = Measurement.Temp;
         }
+
         public void Today()
         {
             When = DateTime.Now;
@@ -49,6 +69,7 @@ namespace DialogBot
                 return (int)(((float)(When - DateTime.Now).Hours) / 24.0 + 0.5) ;
             }
         }
+
         public async Task<string> BuildResult()
         {
             WeatherClient OWM = new WeatherClient("88597cb7a556c191905de0f52f23d7d6");
@@ -70,6 +91,7 @@ namespace DialogBot
             if (sb.Length == 0) return "I do not understand";
             else return sb.ToString();
         }
+
 
 
     }

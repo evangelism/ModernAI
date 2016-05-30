@@ -7,11 +7,13 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Microsoft.Bot.Connector;
 using Newtonsoft.Json;
-using Microsoft.Bot.Builder.Dialogs;
 using MSEvangelism.OpenWeatherMap;
 using System.Text;
+using Microsoft.Bot.Builder.Dialogs;
+using WeatherDialog;
+using Microsoft.Bot.Builder.FormFlow;
 
-namespace DialogBot
+namespace WeatherBot
 {
     [BotAuthentication]
     public class MessagesController : ApiController
@@ -24,20 +26,16 @@ namespace DialogBot
         {
             if (message.Type == "Message")
             {
-                // return our reply to the user
-                return await Conversation.SendAsync(message, () =>
-                  new WeatherDialog()
-                    .ContinueWith<WeatherParam, string>(async (ctx, wpa) =>
-                     {
-                         var WP = await wpa;
-                         return new ChoiceDialog($"Do you want to subscribe to weather in {WP.Location}", new string[] { "Yes", "No" });
-                     }));
+                return await Conversation.SendAsync(message,
+                    () =>
+                     FormDialog.FromForm<WeatherParam>(WeatherParam.BuildForm));
             }
             else
             {
                 return HandleSystemMessage(message);
             }
         }
+
 
         private Message HandleSystemMessage(Message message)
         {
