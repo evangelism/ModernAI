@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SimpleDialogBot
+namespace DialogBot
 {
     public static class Config
     {

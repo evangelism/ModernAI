@@ -14,14 +14,15 @@ namespace DialogBot
     public class WeatherDialog : IDialog<WeatherParam>
     {
 
-        WeatherParam WP = new WeatherParam();
+        WeatherParam WP;
 
         public async Task StartAsync(IDialogContext context)
         {
+            if (WP == null) WP = new WeatherParam();
             context.Wait(MessageReceivedAsync);
         }
 
-        public async Task MessageReceivedAsync(IDialogContext context, IAwaitable<Message> argument)
+        public async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> argument)
         {
             var message = await argument;
             if (message.Text.ToLower().Contains("subscribe"))
@@ -40,7 +41,7 @@ namespace DialogBot
         async Task<string> Reply(string msg)
         {
             var a = msg.ToLower().Split(' ');
-            if (IsPresent(a, "help"))
+            if (a.IsPresent("help"))
             {
                 return @"This is a simple weather bot.
 Example of commands include:
@@ -48,12 +49,12 @@ Example of commands include:
   temperature in Moscow
   humidity tomorrow";
             }
-            if (IsPresent(a, "temperature")) WP.MeasurementType = Measurement.Temp;
-            if (IsPresent(a, "humidity")) WP.MeasurementType = Measurement.Humidity;
-            if (IsPresent(a, "pressure")) WP.MeasurementType = Measurement.Pressure;
-            if (IsPresent(a, "today")) { WP.Today(); }
-            if (IsPresent(a, "tomorrow")) { WP.Tomorrow(); }
-            if (NextTo(a, "in") != "") WP.Location = NextTo(a, "in");
+            if (a.IsPresent("temperature")) WP.MeasurementType = Measurement.Temp;
+            if (a.IsPresent("humidity")) WP.MeasurementType = Measurement.Humidity;
+            if (a.IsPresent("pressure")) WP.MeasurementType = Measurement.Pressure;
+            if (a.IsPresent("today")) { WP.Today(); }
+            if (a.IsPresent("tomorrow")) { WP.Tomorrow(); }
+            if (a.NextTo("in") != "") WP.Location = a.NextTo("in");
             return await WP.BuildResult();
         }
 
@@ -70,25 +71,5 @@ Example of commands include:
             }
             context.Wait(MessageReceivedAsync);
         }
-
-        string NextTo(string[] str, string pat)
-        {
-            for (int i = 0; i < str.Length - 1; i++)
-            {
-                if (str[i] == pat) return str[i + 1];
-            }
-            return "";
-        }
-
-        bool IsPresent(string[] str, string pat)
-        {
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (str[i] == pat) return true;
-            }
-            return false;
-        }
-
-
     }
 }

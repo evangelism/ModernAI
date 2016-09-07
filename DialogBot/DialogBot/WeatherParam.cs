@@ -49,9 +49,10 @@ namespace DialogBot
                 return (int)(((float)(When - DateTime.Now).Hours) / 24.0 + 0.5) ;
             }
         }
+
         public async Task<string> BuildResult()
         {
-            WeatherClient OWM = new WeatherClient("88597cb7a556c191905de0f52f23d7d6");
+            WeatherClient OWM = new WeatherClient(Config.OpenWeatherMapAPIKey);
             var res = await OWM.Forecast(Location);
             var r = res[Offset];
             StringBuilder sb = new StringBuilder();
@@ -70,7 +71,5 @@ namespace DialogBot
             if (sb.Length == 0) return "I do not understand";
             else return sb.ToString();
         }
-
-
     }
 }

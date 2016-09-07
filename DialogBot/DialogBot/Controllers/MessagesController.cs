@@ -18,45 +18,43 @@ namespace DialogBot
         /// POST: api/Messages
         /// Receive a message from a user and reply to it
         /// </summary>
-        public async Task<Message> Post([FromBody]Message message)
+        public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
-            if (message.Type == "Message")
+            if (activity.Type == ActivityTypes.Message)
             {
-                // return our reply to the user
-                return await Conversation.SendAsync(message, () => new WeatherDialog());
+                await Conversation.SendAsync(activity, () => new WeatherDialog());
             }
             else
             {
-                return HandleSystemMessage(message);
+                HandleSystemMessage(activity);
             }
+            var response = Request.CreateResponse(HttpStatusCode.OK);
+            return response;
         }
 
-        private Message HandleSystemMessage(Message message)
+        private Activity HandleSystemMessage(Activity message)
         {
-            if (message.Type == "Ping")
-            {
-                Message reply = message.CreateReplyMessage();
-                reply.Type = "Ping";
-                return reply;
-            }
-            else if (message.Type == "DeleteUserData")
+            if (message.Type == ActivityTypes.DeleteUserData)
             {
                 // Implement user deletion here
                 // If we handle user deletion, return a real message
             }
-            else if (message.Type == "BotAddedToConversation")
+            else if (message.Type == ActivityTypes.ConversationUpdate)
             {
+                // Handle conversation state changes, like members being added and removed
+                // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
+                // Not available in all channels
             }
-            else if (message.Type == "BotRemovedFromConversation")
+            else if (message.Type == ActivityTypes.ContactRelationUpdate)
             {
+                // Handle add/remove from contact lists
+                // Activity.From + Activity.Action represent what happened
             }
-            else if (message.Type == "UserAddedToConversation")
+            else if (message.Type == ActivityTypes.Typing)
             {
+                // Handle knowing tha the user is typing
             }
-            else if (message.Type == "UserRemovedFromConversation")
-            {
-            }
-            else if (message.Type == "EndOfConversation")
+            else if (message.Type == ActivityTypes.Ping)
             {
             }
 

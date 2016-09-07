@@ -50,7 +50,7 @@ namespace SimpleDialogBot
 
         public async Task<string> BuildResult()
         {
-            WeatherClient OWM = new WeatherClient("88597cb7a556c191905de0f52f23d7d6");
+            WeatherClient OWM = new WeatherClient(Config.OpenWeatherMapAPIKey);
             var res = await OWM.Forecast(Location);
             var r = res[Offset];
             StringBuilder sb = new StringBuilder();
