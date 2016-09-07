@@ -1,20 +1,39 @@
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\obj\Debug\SimpleCommandBot.csprojResolveAssemblyReference.cache
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\SimpleCommandBot.dll.config
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\SimpleCommandBot.dll
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\SimpleCommandBot.pdb
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.Bot.Connector.dll
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.Bot.Connector.Utilities.dll
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.Rest.ClientRuntime.dll
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.WindowsAzure.Configuration.dll
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\Newtonsoft.Json.dll
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\System.Net.Http.Formatting.dll
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\System.Web.Http.dll
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\System.Web.Http.WebHost.dll
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.Rest.ClientRuntime.xml
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.WindowsAzure.Configuration.xml
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\Newtonsoft.Json.xml
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\System.Net.Http.Formatting.xml
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\System.Web.Http.xml
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\bin\System.Web.Http.WebHost.xml
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\obj\Debug\SimpleCommandBot.dll
-C:\Users\dmitryso\documents\visual studio 2015\Projects\SimpleCommandBot\SimpleCommandBot\obj\Debug\SimpleCommandBot.pdb
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Bot Application1.dll.config
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Bot Application1.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Bot Application1.pdb
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Autofac.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Chronic.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.Bot.Builder.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.Bot.Connector.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.IdentityModel.Protocol.Extensions.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.Rest.ClientRuntime.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.WindowsAzure.Configuration.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Newtonsoft.Json.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\System.IdentityModel.Tokens.Jwt.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\System.Net.Http.Formatting.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\System.Web.Http.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\System.Web.Http.WebHost.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Autofac.xml
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.Bot.Builder.xml
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.Bot.Connector.xml
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.IdentityModel.Protocol.Extensions.pdb
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.IdentityModel.Protocol.Extensions.xml
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.Rest.ClientRuntime.xml
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Microsoft.WindowsAzure.Configuration.xml
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\Newtonsoft.Json.xml
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\System.IdentityModel.Tokens.Jwt.pdb
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\System.IdentityModel.Tokens.Jwt.xml
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\System.Net.Http.Formatting.xml
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\System.Web.Http.xml
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\System.Web.Http.WebHost.xml
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\ar\Microsoft.Bot.Builder.resources.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\en\Microsoft.Bot.Builder.resources.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\es\Microsoft.Bot.Builder.resources.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\fa\Microsoft.Bot.Builder.resources.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\fr\Microsoft.Bot.Builder.resources.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\ja\Microsoft.Bot.Builder.resources.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\ru\Microsoft.Bot.Builder.resources.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\bin\zh-hans\Microsoft.Bot.Builder.resources.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\obj\Debug\SimpleCommandBot.csprojResolveAssemblyReference.cache
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\obj\Debug\Bot Application1.dll
+d:\work\ModernAI\SimpleCommandBot\SimpleCommandBot\obj\Debug\Bot Application1.pdb

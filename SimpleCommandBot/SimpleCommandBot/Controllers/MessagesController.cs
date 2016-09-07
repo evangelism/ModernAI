@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Microsoft.Bot.Connector;
-using Microsoft.Bot.Connector.Utilities;
 using Newtonsoft.Json;
 using System.Text;
 using MSEvangelism.OpenWeatherMap;
@@ -20,24 +19,26 @@ namespace SimpleCommandBot
         /// POST: api/Messages
         /// Receive a message from a user and reply to it
         /// </summary>
-        public async Task<Message> Post([FromBody]Message message)
+        public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
-            if (message.Type == "Message")
+            if (activity.Type == ActivityTypes.Message)
             {
-                var reply = await Reply(message.Text);
-                return message.CreateReplyMessage(reply);
+                ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                var rep = await Reply(activity.Text);
+                Activity reply = activity.CreateReply(rep);
+                await connector.Conversations.ReplyToActivityAsync(reply);
             }
             else
             {
-                return HandleSystemMessage(message);
+                HandleSystemMessage(activity);
             }
+            var response = Request.CreateResponse(HttpStatusCode.OK);
+            return response;
         }
-
-
 
         string NextTo(string[] str, string pat)
         {
-            for (int i=0;i<str.Length-1;i++)
+            for (int i = 0; i < str.Length - 1; i++)
             {
                 if (str[i] == pat) return str[i + 1];
             }
@@ -53,7 +54,7 @@ namespace SimpleCommandBot
             return false;
         }
 
-        enum Measurement { Temp=1, Humidity=2, Pressure=4, None=0 };
+        enum Measurement { Temp = 1, Humidity = 2, Pressure = 4, None = 0 };
 
         WeatherClient OWM = new WeatherClient("88597cb7a556c191905de0f52f23d7d6");
 
@@ -64,7 +65,7 @@ namespace SimpleCommandBot
             string whens = "today";
             Measurement mes = Measurement.None;
             var a = msg.ToLower().Split(' ');
-            if (IsPresent(a,"help"))
+            if (IsPresent(a, "help"))
             {
                 return @"This is a simple weather bot.
 Example of commands include:
@@ -81,9 +82,9 @@ Example of commands include:
             var res = await OWM.Forecast(city);
             var r = res[when];
             StringBuilder sb = new StringBuilder();
-            if ((mes & Measurement.Temp)>0)
+            if ((mes & Measurement.Temp) > 0)
             {
-                sb.Append($"The temperature on {r.Date} in {city} is {r.Temp}\r\n"); 
+                sb.Append($"The temperature on {r.Date} in {city} is {r.Temp}\r\n");
             }
             if ((mes & Measurement.Pressure) > 0)
             {
@@ -97,32 +98,30 @@ Example of commands include:
             else return sb.ToString();
         }
 
-        private Message HandleSystemMessage(Message message)
+
+        private Activity HandleSystemMessage(Activity message)
         {
-            if (message.Type == "Ping")
-            {
-                Message reply = message.CreateReplyMessage();
-                reply.Type = "Ping";
-                return reply;
-            }
-            else if (message.Type == "DeleteUserData")
+            if (message.Type == ActivityTypes.DeleteUserData)
             {
                 // Implement user deletion here
                 // If we handle user deletion, return a real message
             }
-            else if (message.Type == "BotAddedToConversation")
+            else if (message.Type == ActivityTypes.ConversationUpdate)
             {
+                // Handle conversation state changes, like members being added and removed
+                // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
+                // Not available in all channels
             }
-            else if (message.Type == "BotRemovedFromConversation")
+            else if (message.Type == ActivityTypes.ContactRelationUpdate)
             {
+                // Handle add/remove from contact lists
+                // Activity.From + Activity.Action represent what happened
             }
-            else if (message.Type == "UserAddedToConversation")
+            else if (message.Type == ActivityTypes.Typing)
             {
+                // Handle knowing tha the user is typing
             }
-            else if (message.Type == "UserRemovedFromConversation")
-            {
-            }
-            else if (message.Type == "EndOfConversation")
+            else if (message.Type == ActivityTypes.Ping)
             {
             }
 

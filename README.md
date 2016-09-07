@@ -1,7 +1,7 @@
-﻿# Modern AI / Cloud Day 2.0
+﻿# Modern AI
 ### Искусственный интеллект в облаке
 
-Материалы для облачного дня 2.0
+## Материалы для [Cloud Day 2.0](https://github.com/evangelism/ModernAI/tree/v1.0.cloudday), Cognitive School and ModernAI Course
 
 ## Полезные ссылки
   * [Microsoft Bot Framework](http://botframework.com)
