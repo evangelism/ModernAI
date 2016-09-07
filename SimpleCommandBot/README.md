@@ -26,7 +26,8 @@
 Ключ доступа можно получить [здесь](http://openweathermap.org/appid).
 7. Опубликуйте бот в облаке
 8. Зарегистрируйте бот на сайте [Bot Framework](http://dev.botframework.com) используя версию v3
-9. Получите ключи *Microsoft App Id* и *Microsoft App Password* и добавьте их в файл `Web.Config` вашего проекта
+9. Получите ключи *Microsoft App Id* и *Microsoft App Password* и добавьте их в файл 
+[Web.Config](SimpleCommandBot/Web.Config) вашего проекта
 10. Ещё раз опубликуйте код с добавленными ключами в облаке
 11. Убедитесь, что бот в облаке работает в эмуляторе (для этого придётся добавить URL, App ID, App Password 
 в эмуляторе)

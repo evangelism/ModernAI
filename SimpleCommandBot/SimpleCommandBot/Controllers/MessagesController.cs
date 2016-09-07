@@ -56,7 +56,7 @@ namespace SimpleCommandBot
 
         enum Measurement { Temp = 1, Humidity = 2, Pressure = 4, None = 0 };
 
-        WeatherClient OWM = new WeatherClient("88597cb7a556c191905de0f52f23d7d6");
+        WeatherClient OWM = new WeatherClient(Config.OpenWeatherMapAPIKey);
 
         async Task<string> Reply(string msg)
         {

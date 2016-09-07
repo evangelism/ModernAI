@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Microsoft.Bot.Connector;
-using Microsoft.Bot.Connector.Utilities;
 using Newtonsoft.Json;
-using MSEvangelism.OpenWeatherMap;
-using System.Text;
 
 namespace SimpleDialogBot
 {
@@ -20,21 +17,27 @@ namespace SimpleDialogBot
         /// POST: api/Messages
         /// Receive a message from a user and reply to it
         /// </summary>
-        public async Task<Message> Post([FromBody]Message message)
+        public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
-            if (message.Type == "Message")
+            if (activity.Type == ActivityTypes.Message)
             {
-                var x = message.GetBotUserData<WeatherParam>("weather");
+                ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                var State = activity.GetStateClient();
+                var UserData = await State.BotState.GetUserDataAsync(activity.ChannelId, activity.From.Id);
+                var x = UserData.GetProperty<WeatherParam>("weather");
                 if (x != null) WP = x;
-                var reply = await Reply(message.Text);
-                var msg = message.CreateReplyMessage(reply);
-                msg.SetBotUserData("weather",WP);
-                return msg;
+                var rep = await Reply(activity.Text);
+                Activity reply = activity.CreateReply(rep);
+                UserData.SetProperty<WeatherParam>("weather", WP);
+                await State.BotState.SetUserDataAsync(activity.ChannelId, activity.From.Id, UserData);
+                await connector.Conversations.ReplyToActivityAsync(reply);
             }
             else
             {
-                return HandleSystemMessage(message);
+                HandleSystemMessage(activity);
             }
+            var response = Request.CreateResponse(HttpStatusCode.OK);
+            return response;
         }
 
         WeatherParam WP = new WeatherParam();
@@ -42,7 +45,7 @@ namespace SimpleDialogBot
         async Task<string> Reply(string msg)
         {
             var a = msg.ToLower().Split(' ');
-            if (IsPresent(a, "help"))
+            if (a.IsPresent("help"))
             {
                 return @"This is a simple weather bot.
 Example of commands include:
@@ -50,59 +53,38 @@ Example of commands include:
   temperature in Moscow
   humidity tomorrow";
             }
-            if (IsPresent(a, "temperature")) WP.MeasurementType = Measurement.Temp;
-            if (IsPresent(a, "humidity")) WP.MeasurementType = Measurement.Humidity;
-            if (IsPresent(a, "pressure")) WP.MeasurementType = Measurement.Pressure;
-            if (IsPresent(a, "today")) { WP.Today(); }
-            if (IsPresent(a, "tomorrow")) { WP.Tomorrow(); }
-            if (NextTo(a, "in") != "") WP.Location = NextTo(a, "in");
+            if (a.IsPresent("temperature")) WP.MeasurementType = Measurement.Temp;
+            if (a.IsPresent("humidity")) WP.MeasurementType = Measurement.Humidity;
+            if (a.IsPresent("pressure")) WP.MeasurementType = Measurement.Pressure;
+            if (a.IsPresent("today")) { WP.Today(); }
+            if (a.IsPresent("tomorrow")) { WP.Tomorrow(); }
+            if (a.NextTo("in") != "") WP.Location = a.NextTo("in");
             return await WP.BuildResult();
         }
 
-        string NextTo(string[] str, string pat)
+        private Activity HandleSystemMessage(Activity message)
         {
-            for (int i = 0; i < str.Length - 1; i++)
-            {
-                if (str[i] == pat) return str[i + 1];
-            }
-            return "";
-        }
-
-        bool IsPresent(string[] str, string pat)
-        {
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (str[i] == pat) return true;
-            }
-            return false;
-        }
-
-        private Message HandleSystemMessage(Message message)
-        {
-            if (message.Type == "Ping")
-            {
-                Message reply = message.CreateReplyMessage();
-                reply.Type = "Ping";
-                return reply;
-            }
-            else if (message.Type == "DeleteUserData")
+            if (message.Type == ActivityTypes.DeleteUserData)
             {
                 // Implement user deletion here
                 // If we handle user deletion, return a real message
             }
-            else if (message.Type == "BotAddedToConversation")
+            else if (message.Type == ActivityTypes.ConversationUpdate)
             {
+                // Handle conversation state changes, like members being added and removed
+                // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
+                // Not available in all channels
             }
-            else if (message.Type == "BotRemovedFromConversation")
+            else if (message.Type == ActivityTypes.ContactRelationUpdate)
             {
+                // Handle add/remove from contact lists
+                // Activity.From + Activity.Action represent what happened
             }
-            else if (message.Type == "UserAddedToConversation")
+            else if (message.Type == ActivityTypes.Typing)
             {
+                // Handle knowing tha the user is typing
             }
-            else if (message.Type == "UserRemovedFromConversation")
-            {
-            }
-            else if (message.Type == "EndOfConversation")
+            else if (message.Type == ActivityTypes.Ping)
             {
             }
 

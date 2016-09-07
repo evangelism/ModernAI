@@ -69,7 +69,5 @@ namespace SimpleDialogBot
             if (sb.Length == 0) return "I do not understand";
             else return sb.ToString();
         }
-
-
     }
 }
