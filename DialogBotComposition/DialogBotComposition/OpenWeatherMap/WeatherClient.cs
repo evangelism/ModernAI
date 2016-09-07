@@ -7,7 +7,6 @@ using System.Web;
 
 namespace MSEvangelism.OpenWeatherMap
 {
-    [Serializable]
     public class WeatherClient
     {
         public string AppID { get; set; } = "";

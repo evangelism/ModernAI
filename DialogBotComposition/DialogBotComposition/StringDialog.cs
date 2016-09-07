@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace DialogBot
+namespace DialogBotComposition
 {
     [Serializable]
     public class StringDialog : IDialog<string>
@@ -22,7 +22,7 @@ namespace DialogBot
             context.Wait(MessageReceivedAsync);
         }
 
-        public async Task MessageReceivedAsync(IDialogContext context, IAwaitable<Message> argument)
+        public async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> argument)
         {
             var message = await argument;
             context.Done(message.Text);
