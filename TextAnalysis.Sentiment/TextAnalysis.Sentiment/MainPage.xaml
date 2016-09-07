@@ -1,0 +1,18 @@
+﻿<Page
+    x:Class="TextAnalysis.Sentiment.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TextAnalysis.Sentiment"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <charting:Chart x:Name="Graph" Title="War and Peace">
+            <charting:Chart.Series>
+                <charting:LineSeries x:Name="Data" Title="Sentiment" ItemsSource="{Binding Items, Mode=OneWay}" IndependentValueBinding="{Binding Name}" DependentValueBinding="{Binding Value}"/>
+            </charting:Chart.Series>
+        </charting:Chart>
+    </Grid>
+</Page>

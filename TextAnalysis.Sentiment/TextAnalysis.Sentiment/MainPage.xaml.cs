@@ -1,0 +1,95 @@
+﻿using Evangelism;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
+using System.Threading.Tasks;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
+
+// Документацию по шаблону элемента "Пустая страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+
+namespace TextAnalysis.Sentiment
+{
+
+    public class DataItem
+    {
+        public string Name { get; set; }
+        public int Value { get; set; }
+        public DataItem(string n, int v)
+        {
+            Name = n;
+            Value = v;
+        }
+    }
+
+    /// <summary>
+    /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
+    /// </summary>
+    public sealed partial class MainPage : Page
+    {
+        Random Rnd = new Random();
+
+        public ObservableCollection<DataItem> Items { get; set; } 
+            = new ObservableCollection<DataItem>();
+
+        public MainPage()
+        {
+            this.InitializeComponent();
+            Data.DataContext = this;
+        }
+
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            await Analyze();
+        }
+
+        public async Task Analyze()
+        {
+            string fname = @"Data\wap.txt";
+            StorageFolder InstallationFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+            var file = await InstallationFolder.GetFileAsync(fname);
+            var stream = await file.OpenReadAsync();
+            var sr = new StreamReader(stream.AsStreamForRead());
+            int b = 0;
+            int c = 0;
+            StringBuilder sb = new StringBuilder();
+
+            while (!sr.EndOfStream)
+            {
+                var s = await sr.ReadLineAsync();
+                if (s.Contains("BOOK"))
+                {
+                    b++;
+                    c = 0;
+                    if (b > 2) break;
+                    continue;
+                }
+                if (s.Contains("CHAPTER"))
+                {
+                    if (sb.Length > 20)
+                    {
+                        var key = $"b{b}c{c}";
+                        Items.Add(new DataItem(key, sb.Length));
+                    }
+                    sb.Clear();
+                    c++;
+                    continue;
+                }
+                sb.AppendLine(s);
+            }
+        }
+    }
+}
