@@ -65,9 +65,13 @@ namespace TextAnalysis.Sentiment
             var file = await InstallationFolder.GetFileAsync(fname);
             var stream = await file.OpenReadAsync();
             var sr = new StreamReader(stream.AsStreamForRead());
-            int b = 0;
-            int c = 0;
-            int p = 0;
+            int b = 0; // BOOK
+            int c = 0; // Chapter
+            int p = 0; // Paragraph
+
+            double mp = 0; // most positive score
+            double mn = 1; // most negative score
+
             StringBuilder sb = new StringBuilder();
             TextAnalysisDocumentStore Store = new TextAnalysisDocumentStore();
 
@@ -91,11 +95,29 @@ namespace TextAnalysis.Sentiment
                     sb.Clear();
                     if (Store.documents.Count > 2)
                     {
+                        await Task.Delay(3000); // Pause to make sure service is not called to frequently
                         var R = await Client.Analyze(Store);
-                        var r = (from x in R.documents
+                        var r = R.documents.Count==0 ? 0 :
+                            (from x in R.documents
                                  select x.score).Average();
                         Items.Add(new DataItem($"b{b}c{c}", (int)(r * 100)));
+                        foreach (var x in R.documents)
+                        {
+                            if (x.score >= mp)
+                            {
+                                mp = x.score;
+                                pos.Text = x.text;
+                                posh.Text = $"Positive score={mp}";
+                            }
+                            if (x.score <= mn)
+                            {
+                                mn = x.score;
+                                neg.Text = x.text;
+                                negh.Text = $"Negative score={mn}";
+                            }
+                        }
                     }
+                    Store.documents.Clear();
                     c++;
                     p = 0;
                     continue;

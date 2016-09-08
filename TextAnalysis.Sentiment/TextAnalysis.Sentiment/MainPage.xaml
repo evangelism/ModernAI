@@ -9,10 +9,28 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <charting:Chart x:Name="Graph" Title="War and Peace">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="200"/>
+        </Grid.RowDefinitions>
+        <charting:Chart Grid.Row="0" x:Name="Graph" Title="War and Peace">
             <charting:Chart.Series>
                 <charting:LineSeries x:Name="Data" Title="Sentiment" ItemsSource="{Binding Items, Mode=OneWay}" IndependentValueBinding="{Binding Name}" DependentValueBinding="{Binding Value}"/>
             </charting:Chart.Series>
         </charting:Chart>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="posh" Grid.Column="0" Grid.Row="0" FontSize="18"/>
+            <TextBlock x:Name="negh" Grid.Column="1" Grid.Row="0" FontSize="18"/>
+            <TextBlock x:Name="pos" Grid.Column="0" Grid.Row="1" FontSize="10" Margin="5"/>
+            <TextBlock x:Name="neg" Grid.Column="1" Grid.Row="1" FontSize="10" Margin="5"/>
+        </Grid>
     </Grid>
 </Page>
