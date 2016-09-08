@@ -72,7 +72,8 @@ namespace Evangelism
             {
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 response = await client.PostAsync(api_uri, content);
-                res = Newtonsoft.Json.JsonConvert.DeserializeObject<TextAnalysisDocumentStore>(await response.Content.ReadAsStringAsync());
+                var rstr = await response.Content.ReadAsStringAsync();
+                res = Newtonsoft.Json.JsonConvert.DeserializeObject<TextAnalysisDocumentStore>(rstr);
             }
             return res;
         }

@@ -58,6 +58,8 @@ namespace TextAnalysis.Sentiment
 
         public async Task Analyze()
         {
+            TextAnalysisClient Client = new TextAnalysisClient(Config.TextAnalysisApiKey);
+
             string fname = @"Data\wap.txt";
             StorageFolder InstallationFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
             var file = await InstallationFolder.GetFileAsync(fname);
@@ -65,7 +67,9 @@ namespace TextAnalysis.Sentiment
             var sr = new StreamReader(stream.AsStreamForRead());
             int b = 0;
             int c = 0;
+            int p = 0;
             StringBuilder sb = new StringBuilder();
+            TextAnalysisDocumentStore Store = new TextAnalysisDocumentStore();
 
             while (!sr.EndOfStream)
             {
@@ -81,11 +85,30 @@ namespace TextAnalysis.Sentiment
                 {
                     if (sb.Length > 20)
                     {
-                        var key = $"b{b}c{c}";
-                        Items.Add(new DataItem(key, sb.Length));
+                        var key = $"b{b}c{c}p{p}";
+                        Store.documents.Add(new TextAnalysisDocument(key, "en", sb.ToString()));
                     }
                     sb.Clear();
+                    if (Store.documents.Count > 2)
+                    {
+                        var R = await Client.Analyze(Store);
+                        var r = (from x in R.documents
+                                 select x.score).Average();
+                        Items.Add(new DataItem($"b{b}c{c}", (int)(r * 100)));
+                    }
                     c++;
+                    p = 0;
+                    continue;
+                }
+                if (s.Trim().Equals(string.Empty))
+                {
+                    if (sb.Length > 20)
+                    {
+                        var key = $"b{b}c{c}p{p}";
+                        Store.documents.Add(new TextAnalysisDocument(key, "en", sb.ToString()));
+                    }
+                    sb.Clear();
+                    p++;
                     continue;
                 }
                 sb.AppendLine(s);
