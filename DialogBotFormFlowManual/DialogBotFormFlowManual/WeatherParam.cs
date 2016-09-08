@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Bot.Builder.Dialogs;
 
-namespace WeatherBot
+namespace DialogBotFormFlowManual
 {
    public enum Measurement { Temp = 1, Humidity = 2, Pressure = 4, None = 0 };
 
@@ -22,8 +22,8 @@ namespace WeatherBot
                 .Field(nameof(Location))
                 .Message("Good choice!")
                 .AddRemainingFields()
-                .Confirm("Do you want to subscribe to weather?")
-                .OnCompletionAsync(Subscribe)
+                .Confirm("Is everything correct?")
+                .OnCompletion(Subscribe)
                 .Build();
         }
 
@@ -72,7 +72,7 @@ namespace WeatherBot
 
         public async Task<string> BuildResult()
         {
-            WeatherClient OWM = new WeatherClient("88597cb7a556c191905de0f52f23d7d6");
+            WeatherClient OWM = new WeatherClient(Config.OpenWeatherMapAPIKey);
             var res = await OWM.Forecast(Location);
             var r = res[Offset];
             StringBuilder sb = new StringBuilder();
@@ -91,8 +91,5 @@ namespace WeatherBot
             if (sb.Length == 0) return "I do not understand";
             else return sb.ToString();
         }
-
-
-
     }
 }

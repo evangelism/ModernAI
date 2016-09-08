@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace WeatherBot
+namespace DialogBotFormFlowManual
 {
     public static class WebApiConfig
     {
