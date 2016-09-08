@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Bot.Builder.Dialogs;
 
-namespace DialogBot
+namespace DialogBotFormFlow
 {
     [Serializable]
     public enum Measurement { Temp = 1, Humidity = 2, Pressure = 4, None = 0 };
@@ -62,7 +62,7 @@ namespace DialogBot
 
         public async Task<string> BuildResult()
         {
-            WeatherClient OWM = new WeatherClient("88597cb7a556c191905de0f52f23d7d6");
+            WeatherClient OWM = new WeatherClient(Config.OpenWeatherMapAPIKey);
             var res = await OWM.Forecast(Location);
             var r = res[Offset];
             StringBuilder sb = new StringBuilder();

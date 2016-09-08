@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace DialogBotComposition
+namespace DialogBotFormFlow
 {
     public static class Config
     {
-        public static string OpenWeatherMapAPIKey = "< your API key here>"; // TODO
+        public static string OpenWeatherMapAPIKey = "<your API key here>"; // TODO
     }
 }

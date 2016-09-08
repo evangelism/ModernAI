@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace DialogBot
+namespace DialogBotFormFlow
 {
     [Serializable]
     public class ChoiceDialog : IDialog<string>
