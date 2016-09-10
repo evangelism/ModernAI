@@ -22,11 +22,20 @@ namespace Evangelism
         public string id { get; set; }
         public string text { get; set; }
         public double score { get; set; }
+        public string[] keyPhrases { get; set; }
+        public string errMessage { get; set; }
+    }
+
+    public class TextAnalysisError
+    {
+        public string id { get; set; }
+        public string message { get; set; }
     }
 
     public class TextAnalysisDocumentStore
     {
         public List<TextAnalysisDocument> documents { get; set; }
+        public TextAnalysisError[] errors { get; set; }
         public TextAnalysisDocumentStore()
         {
             documents = new List<Evangelism.TextAnalysisDocument>();
@@ -42,7 +51,8 @@ namespace Evangelism
     public class TextAnalysisClient
     {
         protected string api_key;
-        protected string api_uri = "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment";
+        protected string api_uri_sentiment = "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment";
+        protected string api_uri_keyphrases = "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/keyPhrases";
 
 
         public TextAnalysisClient(string API_Key)
@@ -50,14 +60,14 @@ namespace Evangelism
             api_key = API_Key;
         }
 
-        public async Task<double> Analyze(string text, string lang = "en")
+        public async Task<double> AnalyzeSentiment(string text, string lang = "en")
         {
             var T = new TextAnalysisDocumentStore(new TextAnalysisDocument("id",lang,text));
-            var R = await AnalyzeRaw(T);
+            var R = await AnalyzeSentimentRaw(T);
             return R.documents[0].score;
         }
 
-        public async Task<TextAnalysisDocumentStore> AnalyzeRaw(TextAnalysisDocumentStore S)
+        public async Task<TextAnalysisDocumentStore> AnalyzeSentimentRaw(TextAnalysisDocumentStore S)
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", api_key);
@@ -71,17 +81,30 @@ namespace Evangelism
             using (var content = new ByteArrayContent(byteData))
             {
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                response = await client.PostAsync(api_uri, content);
+                response = await client.PostAsync(api_uri_sentiment, content);
                 var rstr = await response.Content.ReadAsStringAsync();
                 res = Newtonsoft.Json.JsonConvert.DeserializeObject<TextAnalysisDocumentStore>(rstr);
             }
             return res;
         }
 
-        public async Task<TextAnalysisDocumentStore> Analyze(TextAnalysisDocumentStore S)
+        public async Task<TextAnalysisDocumentStore> AnalyzeSentiment(TextAnalysisDocumentStore S)
         {
-            var R = await AnalyzeRaw(S);
-            for (int i=0;i<R.documents.Count;i++)
+            var R = await AnalyzeSentimentRaw(S);
+            CopyDocumentInfo(S, R);
+            return R;
+        }
+
+        public async Task<TextAnalysisDocumentStore> ExtractKeyphrases(TextAnalysisDocumentStore S)
+        {
+            var R = await ExtractKeyPhrasesRaw(S);
+            CopyDocumentInfo(S, R);
+            return R;
+        }
+
+        private static void CopyDocumentInfo(TextAnalysisDocumentStore S, TextAnalysisDocumentStore R)
+        {
+            for (int i = 0; i < R.documents.Count; i++)
             {
                 var t = (from x in S.documents
                          where x.id == R.documents[i].id
@@ -92,7 +115,29 @@ namespace Evangelism
                     R.documents[i].language = t.language;
                 }
             }
-            return R;
         }
+
+        public async Task<TextAnalysisDocumentStore> ExtractKeyPhrasesRaw(TextAnalysisDocumentStore S)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", api_key);
+
+            HttpResponseMessage response;
+            var s = Newtonsoft.Json.JsonConvert.SerializeObject(S);
+            byte[] byteData = Encoding.UTF8.GetBytes(s);
+
+            TextAnalysisDocumentStore res;
+
+            using (var content = new ByteArrayContent(byteData))
+            {
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                response = await client.PostAsync(api_uri_keyphrases, content);
+                var rstr = await response.Content.ReadAsStringAsync();
+                res = Newtonsoft.Json.JsonConvert.DeserializeObject<TextAnalysisDocumentStore>(rstr);
+            }
+            return res;
+        }
+
+
     }
 }

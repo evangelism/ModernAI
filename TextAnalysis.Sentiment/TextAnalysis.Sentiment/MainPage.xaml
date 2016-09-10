@@ -12,13 +12,19 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="200"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <Button Click="AnalyzeClick">Analyze Sentiment</Button>
+            <Button Click="SummaryClick">Build Summary</Button>
+        </StackPanel>
         <charting:Chart Grid.Row="0" x:Name="Graph" Title="War and Peace">
             <charting:Chart.Series>
                 <charting:LineSeries x:Name="Data" Title="Sentiment" ItemsSource="{Binding Items, Mode=OneWay}" IndependentValueBinding="{Binding Name}" DependentValueBinding="{Binding Value}"/>
             </charting:Chart.Series>
         </charting:Chart>
-        <Grid Grid.Row="1">
+        <TextBlock x:Name="Summary" TextWrapping="Wrap" Visibility="Collapsed" Grid.Row="0" Grid.RowSpan="2"/>
+        <Grid Grid.Row="1" x:Name="PosGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="*"/>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Bot.Builder.Dialogs;
 
-namespace DialogBot
+namespace MyBot
 {
     [Serializable]
     public enum Measurement { Temp = 1, Humidity = 2, Pressure = 4, None = 0 };

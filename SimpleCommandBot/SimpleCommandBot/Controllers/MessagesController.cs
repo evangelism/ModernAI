@@ -36,24 +36,6 @@ namespace SimpleCommandBot
             return response;
         }
 
-        string NextTo(string[] str, string pat)
-        {
-            for (int i = 0; i < str.Length - 1; i++)
-            {
-                if (str[i] == pat) return str[i + 1];
-            }
-            return "";
-        }
-
-        bool IsPresent(string[] str, string pat)
-        {
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (str[i] == pat) return true;
-            }
-            return false;
-        }
-
         enum Measurement { Temp = 1, Humidity = 2, Pressure = 4, None = 0 };
 
         WeatherClient OWM = new WeatherClient(Config.OpenWeatherMapAPIKey);
@@ -65,7 +47,7 @@ namespace SimpleCommandBot
             string whens = "today";
             Measurement mes = Measurement.None;
             var a = msg.ToLower().Split(' ');
-            if (IsPresent(a, "help"))
+            if (a.IsPresent("help"))
             {
                 return @"This is a simple weather bot.
 Example of commands include:
@@ -73,12 +55,12 @@ Example of commands include:
   temperature in Moscow
   humidity tomorrow";
             }
-            if (IsPresent(a, "temperature")) mes |= Measurement.Temp;
-            if (IsPresent(a, "humidity")) mes |= Measurement.Humidity;
-            if (IsPresent(a, "pressure")) mes |= Measurement.Pressure;
-            if (IsPresent(a, "today")) { when = 0; whens = "today"; }
-            if (IsPresent(a, "tomorrow")) { when = 1; whens = "tomorrow"; }
-            if (NextTo(a, "in") != "") city = NextTo(a, "in");
+            if (a.IsPresent("temperature")) mes |= Measurement.Temp;
+            if (a.IsPresent("humidity")) mes |= Measurement.Humidity;
+            if (a.IsPresent("pressure")) mes |= Measurement.Pressure;
+            if (a.IsPresent("today")) { when = 0; whens = "today"; }
+            if (a.IsPresent("tomorrow")) { when = 1; whens = "tomorrow"; }
+            if (a.NextTo("in") != "") city = a.NextTo("in");
             var res = await OWM.Forecast(city);
             var r = res[when];
             StringBuilder sb = new StringBuilder();
@@ -97,7 +79,6 @@ Example of commands include:
             if (sb.Length == 0) return "I do not understand";
             else return sb.ToString();
         }
-
 
         private Activity HandleSystemMessage(Activity message)
         {

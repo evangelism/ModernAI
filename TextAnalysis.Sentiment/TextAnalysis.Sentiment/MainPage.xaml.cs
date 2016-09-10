@@ -50,12 +50,6 @@ namespace TextAnalysis.Sentiment
             Data.DataContext = this;
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            await Analyze();
-        }
-
         public async Task Analyze()
         {
             TextAnalysisClient Client = new TextAnalysisClient(Config.TextAnalysisApiKey);
@@ -96,7 +90,7 @@ namespace TextAnalysis.Sentiment
                     if (Store.documents.Count > 2)
                     {
                         await Task.Delay(3000); // Pause to make sure service is not called to frequently
-                        var R = await Client.Analyze(Store);
+                        var R = await Client.AnalyzeSentiment(Store);
                         var r = R.documents.Count==0 ? 0 :
                             (from x in R.documents
                                  select x.score).Average();
@@ -135,6 +129,93 @@ namespace TextAnalysis.Sentiment
                 }
                 sb.AppendLine(s);
             }
+        }
+
+        public async Task Summarize()
+        {
+            TextAnalysisClient Client = new TextAnalysisClient(Config.TextAnalysisApiKey);
+
+            string fname = @"Data\wap.txt";
+            StorageFolder InstallationFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+            var file = await InstallationFolder.GetFileAsync(fname);
+            var stream = await file.OpenReadAsync();
+            var sr = new StreamReader(stream.AsStreamForRead());
+            int b = 0; // BOOK
+            int c = 0; // Chapter
+            int p = 0; // Paragraph
+
+            StringBuilder sb = new StringBuilder();
+            TextAnalysisDocumentStore Store = new TextAnalysisDocumentStore();
+
+            while (!sr.EndOfStream)
+            {
+                var s = await sr.ReadLineAsync();
+                if (s.Contains("BOOK"))
+                {
+                    b++;
+                    c = 0;
+                    if (b > 2) break;
+                    continue;
+                }
+                if (s.Contains("CHAPTER"))
+                {
+                    if (sb.Length > 20)
+                    {
+                        var key = $"b{b}c{c}p{p}";
+                        Store.documents.Add(new TextAnalysisDocument(key, "en", sb.ToString()));
+                    }
+                    sb.Clear();
+                    if (Store.documents.Count > 0)
+                    {
+                        var R = await Client.ExtractKeyphrases(Store);
+                        StringBuilder z = new StringBuilder();
+                        z.AppendLine($"CHAPTER {c}");
+                        foreach (var d in R.documents)
+                        {
+                            z.AppendLine(string.Join(",", d.keyPhrases));
+                        }
+                        Summary.Text += z.ToString();
+                    }
+                    Store.documents.Clear();
+                    c++;
+                    p = 0;
+                    continue;
+                }
+                if (s.Trim().Equals(string.Empty))
+                {
+                    if (sb.Length > 20)
+                    {
+                        var key = $"b{b}c{c}p{p}";
+                        if (Store.documents.Count>0 && Store.documents.Last().text.Length+sb.ToString().Length<5000)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Last {Store.documents.Last().text.Length}, sb {sb.Length}");
+                            Store.documents.Last().text += "\n\r" + sb.ToString();
+                        }
+                        else Store.documents.Add(new TextAnalysisDocument(key, "en", sb.ToString()));
+                    }
+                    sb.Clear();
+                    p++;
+                    continue;
+                }
+                sb.AppendLine(s);
+            }
+        }
+
+
+        private async void AnalyzeClick(object sender, RoutedEventArgs e)
+        {
+            Summary.Visibility = Visibility.Collapsed;
+            PosGrid.Visibility = Visibility.Visible;
+            Graph.Visibility = Visibility.Visible;
+            await Analyze();
+        }
+
+        private async void SummaryClick(object sender, RoutedEventArgs e)
+        {
+            Summary.Visibility = Visibility.Visible;
+            PosGrid.Visibility = Visibility.Collapsed;
+            Graph.Visibility = Visibility.Collapsed;
+            await Summarize();
         }
     }
 }
