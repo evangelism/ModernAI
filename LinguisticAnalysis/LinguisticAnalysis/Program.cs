@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace LinguisticAnalysis
@@ -51,8 +52,10 @@ namespace LinguisticAnalysis
                         // Req.AnalyzerIds = (from x in Analyzers select x.Id).ToArray();
                         Req.AnalyzerIds = new Guid[] { Analyzers[1].Id };
                         var Res = await Client.AnalyzeTextAsync(Req);
-                        Console.WriteLine(Res[0].Result);
-                        Console.ReadKey();
+                        // Console.WriteLine(Res[0].Result);
+                        ShowAdj(Res[0].Result.ToString());
+                        await Task.Delay(1000);
+                        // Console.ReadKey();
                     }
                     sb.Clear();
                 }
@@ -62,5 +65,15 @@ namespace LinguisticAnalysis
                 }
             }
         }
+
+        public static void ShowAdj(string s)
+        {
+            Regex ItemRegex = new Regex(@"\(JJ (\w+)\) \(NN (\w+)\)", RegexOptions.Compiled);
+            foreach (Match ItemMatch in ItemRegex.Matches(s))
+            {
+                Console.WriteLine($"{ItemMatch.Groups[1].ToString()} {ItemMatch.Groups[2].ToString()}");
+            }
+        }
+
     }
 }
