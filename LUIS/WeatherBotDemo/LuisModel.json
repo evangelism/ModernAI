@@ -1,0 +1,391 @@
+{
+  "luis_schema_version": "1.3.0",
+  "name": "CloudDayLuisBotDemo",
+  "desc": "",
+  "culture": "en-us",
+  "intents": [
+    {
+      "name": "GetHelp"
+    },
+    {
+      "name": "GetWeather"
+    },
+    {
+      "name": "Hello"
+    },
+    {
+      "name": "None"
+    },
+    {
+      "name": "Thanks"
+    }
+  ],
+  "entities": [
+    {
+      "name": "parameter"
+    }
+  ],
+  "composites": [],
+  "bing_entities": [
+    "datetime",
+    "geography"
+  ],
+  "actions": [
+    {
+      "actionName": "GetWeather",
+      "intentName": "GetWeather",
+      "actionParameters": [
+        {
+          "parameterName": "when",
+          "entityName": "datetime",
+          "required": false
+        },
+        {
+          "parameterName": "location",
+          "entityName": "geography",
+          "required": false
+        },
+        {
+          "parameterName": "parameter",
+          "entityName": "parameter",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "model_features": [
+    {
+      "name": "ParameterFeature",
+      "mode": true,
+      "words": "temperature,humidity,pressure",
+      "activated": true
+    }
+  ],
+  "regex_features": [],
+  "utterances": [
+    {
+      "text": "show me the weather forecast",
+      "intent": "GetWeather",
+      "entities": []
+    },
+    {
+      "text": "weather",
+      "intent": "GetWeather",
+      "entities": []
+    },
+    {
+      "text": "get weather",
+      "intent": "GetWeather",
+      "entities": []
+    },
+    {
+      "text": "what is the weather like today?",
+      "intent": "GetWeather",
+      "entities": []
+    },
+    {
+      "text": "will it be warm tomorrow?",
+      "intent": "GetWeather",
+      "entities": []
+    },
+    {
+      "text": "how cold will it be tomorrow?",
+      "intent": "GetWeather",
+      "entities": []
+    },
+    {
+      "text": "what's the weather forecast for 29.07.2016?",
+      "intent": "GetWeather",
+      "entities": []
+    },
+    {
+      "text": "what temperature is in moscow today?",
+      "intent": "GetWeather",
+      "entities": []
+    },
+    {
+      "text": "how cold is it in paris?",
+      "intent": "GetWeather",
+      "entities": []
+    },
+    {
+      "text": "temperature in moscow",
+      "intent": "GetWeather",
+      "entities": [
+        {
+          "entity": "parameter",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "what temperature will be in san francisco a day after tomorrow?",
+      "intent": "GetWeather",
+      "entities": [
+        {
+          "entity": "parameter",
+          "startPos": 1,
+          "endPos": 1
+        }
+      ]
+    },
+    {
+      "text": "humidity today",
+      "intent": "GetWeather",
+      "entities": [
+        {
+          "entity": "parameter",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "humidity in paris",
+      "intent": "GetWeather",
+      "entities": [
+        {
+          "entity": "parameter",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "can you say anything about humidity?",
+      "intent": "GetWeather",
+      "entities": [
+        {
+          "entity": "parameter",
+          "startPos": 5,
+          "endPos": 5
+        }
+      ]
+    },
+    {
+      "text": "humidity?",
+      "intent": "GetWeather",
+      "entities": [
+        {
+          "entity": "parameter",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "pressure for tomorrow, please",
+      "intent": "GetWeather",
+      "entities": [
+        {
+          "entity": "parameter",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "what is about pressure today?",
+      "intent": "GetWeather",
+      "entities": [
+        {
+          "entity": "parameter",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "any pressure?",
+      "intent": "GetWeather",
+      "entities": [
+        {
+          "entity": "parameter",
+          "startPos": 1,
+          "endPos": 1
+        }
+      ]
+    },
+    {
+      "text": "humidity in moscow, please",
+      "intent": "GetWeather",
+      "entities": [
+        {
+          "entity": "parameter",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "will it be really hot today?",
+      "intent": "GetWeather",
+      "entities": []
+    },
+    {
+      "text": "how cold is it now?",
+      "intent": "GetWeather",
+      "entities": []
+    },
+    {
+      "text": "weather for today please?",
+      "intent": "GetWeather",
+      "entities": []
+    },
+    {
+      "text": "weather for tomorrow, please!",
+      "intent": "GetWeather",
+      "entities": []
+    },
+    {
+      "text": "temperature for a day after tomorrow",
+      "intent": "GetWeather",
+      "entities": [
+        {
+          "entity": "parameter",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "weather today moscow",
+      "intent": "GetWeather",
+      "entities": []
+    },
+    {
+      "text": "humidity in london",
+      "intent": "GetWeather",
+      "entities": [
+        {
+          "entity": "parameter",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "weather tomorrow london",
+      "intent": "GetWeather",
+      "entities": []
+    },
+    {
+      "text": "humidity in berlin",
+      "intent": "GetWeather",
+      "entities": [
+        {
+          "entity": "parameter",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "help",
+      "intent": "GetHelp",
+      "entities": []
+    },
+    {
+      "text": "hello",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
+      "text": "thank you",
+      "intent": "Thanks",
+      "entities": []
+    },
+    {
+      "text": "humidity in seattle today",
+      "intent": "GetWeather",
+      "entities": [
+        {
+          "entity": "parameter",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "what can you do?",
+      "intent": "GetHelp",
+      "entities": []
+    },
+    {
+      "text": "hi",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
+      "text": "hey",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
+      "text": "nice to meet you",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
+      "text": "hello there",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
+      "text": "get help",
+      "intent": "GetHelp",
+      "entities": []
+    },
+    {
+      "text": "help me",
+      "intent": "GetHelp",
+      "entities": []
+    },
+    {
+      "text": "what can i speak with you about?",
+      "intent": "GetHelp",
+      "entities": []
+    },
+    {
+      "text": "thanks",
+      "intent": "Thanks",
+      "entities": []
+    },
+    {
+      "text": "you are the best",
+      "intent": "Thanks",
+      "entities": []
+    },
+    {
+      "text": "you saved my day",
+      "intent": "Thanks",
+      "entities": []
+    },
+    {
+      "text": "thanks, thanks, thanks",
+      "intent": "Thanks",
+      "entities": []
+    },
+    {
+      "text": "thank you very much",
+      "intent": "Thanks",
+      "entities": []
+    },
+    {
+      "text": "are you here?",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
+      "text": "hi!",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
+      "text": "hi, how are you?",
+      "intent": "Hello",
+      "entities": []
+    }
+  ]
+}

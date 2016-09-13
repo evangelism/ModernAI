@@ -1,0 +1,65 @@
+﻿<Page
+    x:Class="LuisTalk.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LuisTalk"
+    xmlns:wm="using:LuisTalk.ViewModels"
+    xmlns:conv="using:LuisTalk.ViewUtilities.Converters"
+    xmlns:sel="using:LuisTalk.ViewUtilities.DataTemplateSelectors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <conv:SenderSideToHorizontalAlignmentConverter x:Key="SenderSideToHorizontalAlignmentConverter"/>
+        <DataTemplate x:DataType="wm:ChatTextViewModel" x:Key="ChatTextDataTemplate">
+            <StackPanel Margin="5" Background="{ThemeResource SystemAccentColor}" HorizontalAlignment="{x:Bind SenderSide, Converter={StaticResource SenderSideToHorizontalAlignmentConverter}}" MaxWidth="300">
+                <TextBlock Text="{x:Bind SentDateTime, Mode=TwoWay}" Margin="3"  HorizontalAlignment="{x:Bind SenderSide, Converter={StaticResource SenderSideToHorizontalAlignmentConverter}}"/>
+                <TextBlock Text="{x:Bind Text, Mode=OneWay}" Margin="3" HorizontalAlignment="{x:Bind SenderSide, Converter={StaticResource SenderSideToHorizontalAlignmentConverter}}" TextWrapping="Wrap"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:DataType="wm:ChatImageViewModel" x:Key="ChatImageDataTemplate">
+            <StackPanel Margin="5" Background="{ThemeResource SystemAccentColor}" HorizontalAlignment="{x:Bind SenderSide, Converter={StaticResource SenderSideToHorizontalAlignmentConverter}}">
+                <TextBlock Text="{x:Bind SentDateTime, Mode=TwoWay}" Margin="3"  HorizontalAlignment="{x:Bind SenderSide, Converter={StaticResource SenderSideToHorizontalAlignmentConverter}}"/>
+                <Image Source="{x:Bind Image, Mode=OneWay}" Height="150" Margin="3" HorizontalAlignment="{x:Bind SenderSide, Converter={StaticResource SenderSideToHorizontalAlignmentConverter}}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <sel:ChatItemDataTemplateSelector x:Key="ChatItemDataTemplateSelector" ChatTextDataTemplate="{StaticResource ChatTextDataTemplate}" ChatImageDataTemplate="{StaticResource ChatImageDataTemplate}"/>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="{ThemeResource SystemAccentColor}">
+            <Image Source="/Assets/LuisPhoto.jpg" Height="50" Margin="10,5,0,5"/>
+            <TextBlock Text="Luis" FontSize="30" Margin="5"/>
+        </StackPanel>
+
+        <ScrollViewer Name="swMessages" Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+            <ItemsControl ItemsSource="{x:Bind ViewModel.ChatItems, Mode=OneWay}" ItemTemplateSelector="{StaticResource ChatItemDataTemplateSelector}" SizeChanged="ItemsControl_SizeChanged">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel VerticalAlignment="Bottom"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <Grid Grid.Row="2" Background="{ThemeResource SystemAccentColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="&#xE114;" Command="{x:Bind ViewModel.PickPhotoCommand}" FontFamily="Segoe MDL2 Assets" FontSize="40" Margin="5"/>
+            <TextBox Name="tbInput" Text="{x:Bind ViewModel.InputText, Mode=OneWay}" Grid.Column="1" Margin="5" TextChanging="tbInput_TextChanging"/>
+            <Button Grid.Column="2" Content="&#xE122;" Command="{x:Bind ViewModel.SendCommand}" FontFamily="Segoe MDL2 Assets" FontSize="40" Margin="5"/>
+        </Grid>
+    </Grid>
+</Page>

@@ -16,8 +16,9 @@
   4. [DialogBotComposition](DialogBotComposition) - бот, демонстрирующий композицию диалогов
   5. [DialogBotFormFlow](DialogBotFormFlow) - автоматическое построение диалогового бота из класса с помощью FormFlow
   6. [DialogBotFormFlowManual](DialogBotFormFlowManual) - построение диалогового бота из класса с помощью FormFlow с кастомизацией
-  7. [HappyFace](HappyFace) - UWP-приложение для поиска самого счастливого (злобного, грустного, ...) лица в интернет
-  8. [TextAnalysis.Sentiment](TextAnalysis.Sentiment) - Пример анализа эмоциональной окраски текста - анализируем роман "Война и Мир" по главам
+  7. [TextAnalysis.Sentiment](TextAnalysis.Sentiment) - Пример анализа эмоциональной окраски текста - анализируем роман "Война и Мир" по главам
+  8. [LUIS](LUIS) - Пример использования LUIS для построение погодного чат-бота, пример подготовлен [Евгением Григоренко](http://github.com/evgri234)
+  9. [HappyFace](HappyFace) - UWP-приложение для поиска самого счастливого (злобного, грустного, ...) лица в интернет
 
   
  Полезные фрагменты кода для самостоятельного создания чат-бота находятся в директории [ExtraFiles](ExtraFiles). Там можно
