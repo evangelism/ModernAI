@@ -20,6 +20,13 @@
   8. [LUIS](LUIS) - Пример использования LUIS для построение погодного чат-бота, пример подготовлен [Евгением Григоренко](http://github.com/evgri234)
   9. [HappyFace](HappyFace) - UWP-приложение для поиска самого счастливого (злобного, грустного, ...) лица в интернет
 
+## Внешние полезные примеры
+
+  1. [Compyter Vision SDK + Samples](https://github.com/microsoft/cognitive-vision-windows) - пример анализа изображений. Обратите внимание на процесс запуска примера в файле Readme.md!
+
+## Другие полезные примеры
+
+  1. [Computer Vision Demo in Python/Jupyter](https://github.com/Microsoft/Cognitive-Vision-Python)
   
  Полезные фрагменты кода для самостоятельного создания чат-бота находятся в директории [ExtraFiles](ExtraFiles). Там можно
  взять классы, взаимодействующие с [OpenWeatherMap API](http://openweathermap.org), класс диалога [ChoiceDialog](ExtraFiles/ChoiceDialog.cs) и др.
