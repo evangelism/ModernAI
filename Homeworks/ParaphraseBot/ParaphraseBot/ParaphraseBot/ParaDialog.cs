@@ -23,7 +23,7 @@ namespace ParaphraseBot
         }
 
         string api_key = "96fc9641c5934292be66b62d51fdde5c";
-        string[] stopwords = new string[]{ "i", "do", "have", "been" };
+        string[] stopwords = new string[]{ "i", "do", "does", "have", "been", "not", "if", "then","else" };
 
         string path;
         Dictionary<string, string[]> Dict;
@@ -35,7 +35,7 @@ namespace ParaphraseBot
             {
                 await context.PostAsync("Loading dict wap.dict");
                 LoadDict("wap.dict");
-                 await context.PostAsync("Configuring analyzer");
+                await context.PostAsync("Configuring analyzer");
                 AnalyzerId = await GetAnalyzerId();
                 await context.PostAsync("Ready to go");
             }
@@ -55,8 +55,11 @@ namespace ParaphraseBot
             return Analyzers[1].Id;
         }
 
+        IDialogContext ctx;
+
         public async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> argument)
         {
+            ctx = context;
             var message = await argument;
             var repl = await Reply(message.Text);
             await context.PostAsync(repl);
@@ -71,6 +74,7 @@ namespace ParaphraseBot
             Req.Text = msg;
             Req.AnalyzerIds = new Guid[] { AnalyzerId };
             var Res = await Client.AnalyzeTextAsync(Req);
+            await ctx.PostAsync(Res[0].Result.ToString());
             return Build(Res[0].Result.ToString());
         }
 
@@ -89,7 +93,7 @@ namespace ParaphraseBot
             {
                 var x = ItemMatch.Groups[1].ToString();
                 var y = ItemMatch.Groups[2].ToString();
-                if (Dict.ContainsKey(x)&&!stopwords.Contains(y))
+                if (Dict.ContainsKey(x)&&!stopwords.Contains(y.ToLower()))
                 {
                     sb.Append(rand(Dict[x]));
                 }
