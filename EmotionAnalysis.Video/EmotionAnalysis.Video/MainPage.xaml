@@ -1,0 +1,33 @@
+﻿<Page
+    x:Class="EmotionAnalysis.Video.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EmotionAnalysis.Video"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBlock>URL:</TextBlock>
+            <TextBox x:Name="url" Text="http://www.soshnikov.com/temp/SocialNet.mp4"></TextBox>
+            <Button Click="Button_Click">Go</Button>
+            <TextBlock x:Name="log"></TextBlock>
+        </StackPanel>
+        <ProgressBar x:Name="pro" Grid.Row="1" Minimum="0" Maximum="100"/>
+        <charting:Chart Grid.Row="2" x:Name="Graph">
+            <charting:Chart.Series>
+                <charting:LineSeries x:Name="Data" Title="Sentiment" ItemsSource="{Binding Items, Mode=OneWay}" IndependentValueBinding="{Binding Name}" DependentValueBinding="{Binding Value}"/>
+            </charting:Chart.Series>
+        </charting:Chart>
+        <ComboBox x:Name="Combo" SelectionChanged="Combo_SelectionChanged" Grid.Row="3">
+        </ComboBox>
+    </Grid>
+</Page>
