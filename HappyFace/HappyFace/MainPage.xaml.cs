@@ -73,7 +73,7 @@ namespace HappyFace
         {
             var client = new HttpClient();     
             client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", APIKey);
-            var uri = "https://bingapis.azure-api.net/api/v5/images/search?count=20&q=" + q;
+            var uri = "https://api.cognitive.microsoft.com/bing/v5.0/images/search?count=20&q=" + q;
             var response = await client.GetStringAsync(uri);
             dynamic x = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
             var L = new List<ImgData>();
