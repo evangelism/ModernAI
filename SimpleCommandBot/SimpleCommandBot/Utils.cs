@@ -15,14 +15,5 @@ namespace SimpleCommandBot
             }
             return "";
         }
-
-        public static bool IsPresent(this string[] str, string pat)
-        {
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (str[i] == pat) return true;
-            }
-            return false;
-        }
     }
 }

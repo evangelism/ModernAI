@@ -55,11 +55,11 @@ Example of commands include:
   temperature in Moscow
   humidity tomorrow";
             }
-            if (a.IsPresent("temperature")) mes |= Measurement.Temp;
-            if (a.IsPresent("humidity")) mes |= Measurement.Humidity;
-            if (a.IsPresent("pressure")) mes |= Measurement.Pressure;
-            if (a.IsPresent("today")) { when = 0; whens = "today"; }
-            if (a.IsPresent("tomorrow")) { when = 1; whens = "tomorrow"; }
+            if (a.Contains("temperature")) mes |= Measurement.Temp;
+            if (a.Contains("humidity")) mes |= Measurement.Humidity;
+            if (a.Contains("pressure")) mes |= Measurement.Pressure;
+            if (a.Contains("today")) { when = 0; whens = "today"; }
+            if (a.Contains("tomorrow")) { when = 1; whens = "tomorrow"; }
             if (a.NextTo("in") != "") city = a.NextTo("in");
             var res = await OWM.Forecast(city);
             var r = res[when];
