@@ -57,7 +57,7 @@ namespace TextAnalysis.Sentiment
         public async Task Analyze()
         {
             TextAnalysisClient Client = new TextAnalysisClient(Config.TextAnalysisApiKey);
-            TextAnalysisLocalClient LClient = new TextAnalysisLocalClient()
+            TextAnalysisLocalClient LocalClient = new TextAnalysisLocalClient()
                                                     { Sensitivity = 30, Bias = 1 };
 
             string fname = @"Data\wap.txt";
@@ -97,18 +97,22 @@ namespace TextAnalysis.Sentiment
                     {
                         await Task.Delay(3000); // Pause to make sure service is not called to frequently
 
-                        var RL = LClient.AnalyzeSentiment(Store);
+                        // Analyze sentiment locally using Local Client (list of keywords)
+                        var RL = LocalClient.AnalyzeSentiment(Store);
                         var rl = RL.documents.Count == 0 ? 0 :
-                            (from x in RL.documents
+                            (from x in RL.documents // compute average score for the subchapter
                              select x.score).Average();
                         ItemsLocal.Add(new DataItem($"b{b}c{c}", (int)(rl * 100)));
 
+                        // Anlyze sentiment properly using cognitive web service
                         var R = await Client.AnalyzeSentiment(Store);
                         var r = R.documents.Count==0 ? 0 :
                             (from x in R.documents
                                  select x.score).Average();
                         Items.Add(new DataItem($"b{b}c{c}", (int)(r * 100)));
 
+                        // Now go through each document passage and find 
+                        // passages with best /worst scores and display them
                         foreach (var x in R.documents)
                         {
                             if (x.score >= mp)
