@@ -17,7 +17,7 @@ namespace DialogBotComposition
         public ChoiceDialog(string msg, IEnumerable<string> opts)
         {
             this.msg = msg;
-            foreach(var x in opts) { this.opts.Add(x); }
+            this.opts.AddRange(opts);
         }
         public async Task StartAsync(IDialogContext context)
         {

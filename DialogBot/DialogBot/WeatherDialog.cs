@@ -25,6 +25,7 @@ namespace DialogBot
         public async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> argument)
         {
             var message = await argument;
+
             if (message.Text.ToLower().Contains("subscribe"))
             {
                 PromptDialog.Confirm(context, Subscribe,
@@ -41,7 +42,7 @@ namespace DialogBot
         async Task<string> Reply(string msg)
         {
             var a = msg.ToLower().Split(' ');
-            if (a.IsPresent("help"))
+            if (a.Contains("help"))
             {
                 return @"This is a simple weather bot.
 Example of commands include:
@@ -49,11 +50,11 @@ Example of commands include:
   temperature in Moscow
   humidity tomorrow";
             }
-            if (a.IsPresent("temperature")) WP.MeasurementType = Measurement.Temp;
-            if (a.IsPresent("humidity")) WP.MeasurementType = Measurement.Humidity;
-            if (a.IsPresent("pressure")) WP.MeasurementType = Measurement.Pressure;
-            if (a.IsPresent("today")) { WP.Today(); }
-            if (a.IsPresent("tomorrow")) { WP.Tomorrow(); }
+            if (a.Contains("temperature")) WP.MeasurementType = Measurement.Temp;
+            if (a.Contains("humidity")) WP.MeasurementType = Measurement.Humidity;
+            if (a.Contains("pressure")) WP.MeasurementType = Measurement.Pressure;
+            if (a.Contains("today")) { WP.Today(); }
+            if (a.Contains("tomorrow")) { WP.Tomorrow(); }
             if (a.NextTo("in") != "") WP.Location = a.NextTo("in");
             return await WP.BuildResult();
         }

@@ -96,6 +96,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Config.cs" />
+    <Compile Include="Evangelism\TextAnalysisLocalClient.cs" />
+    <Compile Include="Evangelism\TextAnalysisDocument.cs" />
     <Compile Include="Evangelism\TextAnalysisClient.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

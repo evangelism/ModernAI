@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Bot.Builder.Dialogs;
 
-namespace MyBot
+namespace SimpleCommandBot
 {
     [Serializable]
     public enum Measurement { Temp = 1, Humidity = 2, Pressure = 4, None = 0 };
@@ -24,7 +24,7 @@ namespace MyBot
         {
             When = DateTime.Now;
             MeasurementType = Measurement.Temp;
-	    Location = "Moscow";
+            Location = "Moscow";
         }
 
         public void Today()

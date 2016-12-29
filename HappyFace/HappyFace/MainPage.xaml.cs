@@ -35,7 +35,7 @@ namespace HappyFace
     public sealed partial class MainPage : Page
     {
 
-        public string APIKey = "291131ee5c274fb78a00797c16af69bc";
+        public string APIKey = "32217dc77dab4497952b046f3398da06";
         public string APIKeyOx = "c89be8532536452d996130a6083d3ca5";
 
         public MainPage()

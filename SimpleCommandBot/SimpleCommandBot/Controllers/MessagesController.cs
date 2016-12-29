@@ -36,18 +36,11 @@ namespace SimpleCommandBot
             return response;
         }
 
-        enum Measurement { Temp = 1, Humidity = 2, Pressure = 4, None = 0 };
-
-        WeatherClient OWM = new WeatherClient(Config.OpenWeatherMapAPIKey);
-
         async Task<string> Reply(string msg)
         {
-            string city = "Moscow";
-            int when = 0;
-            string whens = "today";
-            Measurement mes = Measurement.None;
+            var WP = new WeatherParam();
             var a = msg.ToLower().Split(' ');
-            if (a.IsPresent("help"))
+            if (a.Contains("help"))
             {
                 return @"This is a simple weather bot.
 Example of commands include:
@@ -55,29 +48,13 @@ Example of commands include:
   temperature in Moscow
   humidity tomorrow";
             }
-            if (a.Contains("temperature")) mes |= Measurement.Temp;
-            if (a.Contains("humidity")) mes |= Measurement.Humidity;
-            if (a.Contains("pressure")) mes |= Measurement.Pressure;
-            if (a.Contains("today")) { when = 0; whens = "today"; }
-            if (a.Contains("tomorrow")) { when = 1; whens = "tomorrow"; }
-            if (a.NextTo("in") != "") city = a.NextTo("in");
-            var res = await OWM.Forecast(city);
-            var r = res[when];
-            StringBuilder sb = new StringBuilder();
-            if ((mes & Measurement.Temp) > 0)
-            {
-                sb.Append($"The temperature on {r.Date} in {city} is {r.Temp}\r\n");
-            }
-            if ((mes & Measurement.Pressure) > 0)
-            {
-                sb.Append($"The pressure on {r.Date} in {city} is {r.Pressure}\r\n");
-            }
-            if ((mes & Measurement.Humidity) > 0)
-            {
-                sb.Append($"Humidity on {r.Date} in {city} is {r.Humidity}\r\n");
-            }
-            if (sb.Length == 0) return "I do not understand";
-            else return sb.ToString();
+            if (a.Contains("temperature")) WP.AlsoMeasure(Measurement.Temp);
+            if (a.Contains("humidity")) WP.AlsoMeasure(Measurement.Humidity);
+            if (a.Contains("pressure")) WP.AlsoMeasure(Measurement.Pressure);
+            if (a.Contains("today")) { WP.Today(); }
+            if (a.Contains("tomorrow")) { WP.Tomorrow(); }
+            if (a.NextTo("in") != "") WP.Location = a.NextTo("in");
+            return await WP.BuildResult();
         }
 
         private Activity HandleSystemMessage(Activity message)

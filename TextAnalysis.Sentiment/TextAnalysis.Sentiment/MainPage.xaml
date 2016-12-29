@@ -21,6 +21,7 @@
         <charting:Chart Grid.Row="0" x:Name="Graph" Title="War and Peace">
             <charting:Chart.Series>
                 <charting:LineSeries x:Name="Data" Title="Sentiment" ItemsSource="{Binding Items, Mode=OneWay}" IndependentValueBinding="{Binding Name}" DependentValueBinding="{Binding Value}"/>
+                <charting:LineSeries x:Name="DataLocal" Title="Sentiment Local" ItemsSource="{Binding ItemsLocal, Mode=OneWay}" IndependentValueBinding="{Binding Name}" DependentValueBinding="{Binding Value}"/>
             </charting:Chart.Series>
         </charting:Chart>
         <TextBlock x:Name="Summary" TextWrapping="Wrap" Visibility="Collapsed" Grid.Row="0" Grid.RowSpan="2"/>
