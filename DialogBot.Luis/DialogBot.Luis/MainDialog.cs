@@ -1,6 +1,9 @@
-﻿using Microsoft.Bot.Builder.Dialogs;
+﻿#define TRANSLATE
+using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
+using Microsoft.Bot.Connector;
+using MSEvangelism.BingTranslator;
 using MSEvangelism.OpenWeatherMap;
 using System;
 using System.Collections.Generic;
@@ -67,10 +70,36 @@ namespace DialogBot.Luis
             }
             else { message = "Sorry! I was not able to get the forecast."; }
 
+#if TRANSLATE
+            message = await Translator.Translate(message, "en-US", Locale);
+#endif
+
             await context.PostAsync(message);
 
             context.Wait(MessageReceived);
         }
+
+#if TRANSLATE
+        [NonSerialized]
+        BingTranslatorClient Translator;
+
+        [NonSerialized]
+        string Locale = "ru-RU";
+
+        protected override async Task<string> GetLuisQueryTextAsync(IDialogContext context, IMessageActivity message)
+        {
+            Translator = new BingTranslatorClient(Config.TranslatorKey, Config.TranslatorSecret);
+            var baseLuisText = await base.GetLuisQueryTextAsync(context, message);
+            Locale = message.Locale == null ? "en-US" : message.Locale;
+            if (message.Locale != null && message.Locale != "en-US")
+            {
+                return await Translator.Translate(baseLuisText, message.Locale, "en-US");
+            }
+            else return baseLuisText;
+        }
+
+#endif
+
 
     }
 }
