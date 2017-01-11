@@ -23,7 +23,7 @@
 
 ## Внешние полезные примеры
 
-  1. [Compyter Vision SDK + Samples](https://github.com/microsoft/cognitive-vision-windows) - пример анализа изображений. Обратите внимание на процесс запуска примера в файле Readme.md!
+  1. [Computer Vision SDK + Samples](https://github.com/microsoft/cognitive-vision-windows) - пример анализа изображений. Обратите внимание на процесс запуска примера в файле Readme.md!
 
 ## Другие полезные примеры
 
