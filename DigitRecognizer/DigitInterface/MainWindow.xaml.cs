@@ -1,4 +1,5 @@
-﻿using DigitReco;
+﻿using DigitInterface.CSClassifier;
+using DigitReco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace DigitInterface
         DispatcherTimer dt = new DispatcherTimer();
 
         DigitReco.Classifier Cl = new DigitReco.Classifier();
+        KNNClassifier Knn = new KNNClassifier();
 
         public MainWindow()
         {
@@ -92,7 +94,7 @@ namespace DigitInterface
             get
             {
                 if (Yes(FS)) return ((IClassifier)Cl);
-                if (Yes(CS)) return ((IClassifier)Cl);
+                if (Yes(CS)) return ((IClassifier)Knn);
                 if (Yes(ML)) return ((IClassifier)AzCl);
                 return ((IClassifier)Cl);
             }
