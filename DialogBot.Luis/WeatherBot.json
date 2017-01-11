@@ -1,0 +1,205 @@
+{
+  "luis_schema_version": "1.3.0",
+  "name": "WeatherBot",
+  "desc": "",
+  "culture": "en-us",
+  "intents": [
+    {
+      "name": "Hello"
+    },
+    {
+      "name": "None"
+    },
+    {
+      "name": "Weather"
+    }
+  ],
+  "entities": [
+    {
+      "name": "measurement"
+    }
+  ],
+  "composites": [],
+  "closedLists": [],
+  "bing_entities": [
+    "datetime",
+    "geography"
+  ],
+  "actions": [],
+  "model_features": [],
+  "regex_features": [],
+  "utterances": [
+    {
+      "text": "hello",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
+      "text": "hi",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
+      "text": "greetings",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
+      "text": "what is the weather",
+      "intent": "Weather",
+      "entities": []
+    },
+    {
+      "text": "what is the weather in moscow",
+      "intent": "Weather",
+      "entities": []
+    },
+    {
+      "text": "what is the weather in moscow tomorrow?",
+      "intent": "Weather",
+      "entities": []
+    },
+    {
+      "text": "give me temperature in paris today",
+      "intent": "Weather",
+      "entities": [
+        {
+          "entity": "measurement",
+          "startPos": 2,
+          "endPos": 2
+        }
+      ]
+    },
+    {
+      "text": "what is the temperature in paris",
+      "intent": "Weather",
+      "entities": [
+        {
+          "entity": "measurement",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "pressure in rome, please",
+      "intent": "Weather",
+      "entities": [
+        {
+          "entity": "measurement",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "give me humidity in london",
+      "intent": "Weather",
+      "entities": [
+        {
+          "entity": "measurement",
+          "startPos": 2,
+          "endPos": 2
+        }
+      ]
+    },
+    {
+      "text": "how cold is it in moscow",
+      "intent": "Weather",
+      "entities": [
+        {
+          "entity": "measurement",
+          "startPos": 1,
+          "endPos": 1
+        }
+      ]
+    },
+    {
+      "text": "what is the pressure in paris?",
+      "intent": "Weather",
+      "entities": [
+        {
+          "entity": "measurement",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "what is the pressure in moscow?",
+      "intent": "Weather",
+      "entities": [
+        {
+          "entity": "measurement",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "what is the humidity in moscow",
+      "intent": "Weather",
+      "entities": [
+        {
+          "entity": "measurement",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "give me the pressure!",
+      "intent": "Weather",
+      "entities": [
+        {
+          "entity": "measurement",
+          "startPos": 3,
+          "endPos": 3
+        }
+      ]
+    },
+    {
+      "text": "humidity?",
+      "intent": "Weather",
+      "entities": [
+        {
+          "entity": "measurement",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "pressure?",
+      "intent": "Weather",
+      "entities": [
+        {
+          "entity": "measurement",
+          "startPos": 0,
+          "endPos": 0
+        }
+      ]
+    },
+    {
+      "text": "temperature?",
+      "intent": "Weather",
+      "entities": []
+    },
+    {
+      "text": "temperature and pressure?",
+      "intent": "Weather",
+      "entities": [
+        {
+          "entity": "measurement",
+          "startPos": 0,
+          "endPos": 0
+        },
+        {
+          "entity": "measurement",
+          "startPos": 2,
+          "endPos": 2
+        }
+      ]
+    }
+  ]
+}
