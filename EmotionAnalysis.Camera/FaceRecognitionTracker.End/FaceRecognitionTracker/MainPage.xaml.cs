@@ -1,6 +1,7 @@
 ﻿using Microsoft.ProjectOxford.Emotion;
 using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -124,7 +125,8 @@ namespace FaceRecognitionTracker
         async void GetEmotions(object sender, object e)
         {
             if (!IsFacePresent) return;
-            dt.Stop(); 
+            dt.Stop();
+
             var ms = new MemoryStream();
             try
             {
@@ -134,7 +136,7 @@ namespace FaceRecognitionTracker
             catch { dt.Start(); return; }
 
             ms.Position = 0L;
-            var Emo = await Oxford.RecognizeAsync(ms); 
+            var Emo = await Oxford.RecognizeAsync(ms);
             // ^^^ основной вызов распознавателя эмоций
             if (Emo != null && Emo.Length > 0)
             // если обнаружено одно и более лицо
