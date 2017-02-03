@@ -33,7 +33,7 @@ int dist(int[] a, int[] b)
     return d;
 }
 
-Console.WriteLine(dist(Data[5].Pixels,Data[7].Pixels))
+Console.WriteLine(dist(Data[5].Pixels, Data[7].Pixels));
 
 int Classify(int[] value)
 {
@@ -52,7 +52,7 @@ int Classify(int[] value)
 }
 
 int i=0, c = 0;
-foreach(var x in AllData.Skip(n-tr).Take(100))
+foreach(var x in AllData.Skip(n-tr).Take(5000))
 {
     var z = Classify(x.Pixels);
     if (z == x.Value) c++; i++;

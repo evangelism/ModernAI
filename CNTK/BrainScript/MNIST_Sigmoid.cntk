@@ -1,0 +1,71 @@
+command = trainNetwork:testNetwork
+
+precision = "float"; traceLevel = 1 ; deviceId = "auto"
+
+rootDir = ".." ; dataDir = "$rootDir$/DataSets/MNIST" ;
+outputDir = "./Output" ;
+
+modelPath = "$outputDir$/Models/01_OneHidden"
+
+trainNetwork = {
+    action = "train"
+    
+    BrainScriptNetworkBuilder = {
+        imageShape = 28:28:1
+        labelDim = 10
+        featScale = 1/256
+
+        model(x) = {
+            s1 = x * featScale
+            h1 = DenseLayer {100, activation=Sigmoid} (s1) 
+            z = LinearLayer {labelDim} (h1)
+        }
+        
+        features = Input {imageShape}
+        labels = Input {labelDim}
+
+        out = model (features)
+
+        ce   = CrossEntropyWithSoftmax (labels, out.z)
+        errs = ClassificationError (labels, out.z)
+
+        featureNodes    = (features)
+        labelNodes      = (labels)
+        criterionNodes  = (ce)
+        evaluationNodes = (errs)
+        outputNodes     = (out.z)
+        
+    }
+
+    SGD = {
+        epochSize = 60000
+        minibatchSize = 64
+        maxEpochs = 10
+        learningRatesPerSample = 0.01*5:0.005
+        momentumAsTimeConstant = 0
+        numMBsToShowResult = 500
+    }
+
+    reader = {
+        readerType = "CNTKTextFormatReader"
+        file = "$DataDir$/Train-28x28_cntk_text.txt"
+        input = {
+            features = { dim = 784 ; format = "dense" }
+            labels =   { dim = 10  ; format = "dense" }
+        }
+    }   
+}
+
+testNetwork = {
+    action = "test"
+    minibatchSize = 1024
+
+    reader = {
+        readerType = "CNTKTextFormatReader"
+        file = "$DataDir$/Test-28x28_cntk_text.txt"
+        input = {
+            features = { dim = 784 ; format = "dense" }
+            labels =   { dim = 10  ; format = "dense" }
+        }
+    }
+}

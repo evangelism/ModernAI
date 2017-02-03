@@ -16,7 +16,7 @@ namespace RDFDemo
         {
             IGraph g = new Graph();
             UriLoader.Load(g, new Uri("http://dbpedia.org/resource/Russia"));
-            
+
             Console.WriteLine("=== TRIPLES ===");
             foreach (var x in g.Triples)
             {
@@ -27,7 +27,6 @@ namespace RDFDemo
             }
 
             Console.WriteLine("=== QUERY ===");
-
             SparqlRemoteEndpoint endpoint = new SparqlRemoteEndpoint(new Uri("http://dbpedia.org/sparql"), "http://dbpedia.org");
             SparqlResultSet results = endpoint.QueryWithResultSet(@"
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -51,7 +50,6 @@ SELECT ?birth STR(?name) WHERE {
             {
                 Console.WriteLine(result.ToString());
             }
-
 
             Console.ReadKey();
         }

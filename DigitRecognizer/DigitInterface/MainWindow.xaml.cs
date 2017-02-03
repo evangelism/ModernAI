@@ -29,6 +29,8 @@ namespace DigitInterface
 
         DigitReco.Classifier Cl = new DigitReco.Classifier();
         KNNClassifier Knn = new KNNClassifier();
+        CNTKClassifier.CNTKClassifier Cntk = new CNTKClassifier.CNTKClassifier();
+        AzureClassifier AzCl = new AzureClassifier();
 
         public MainWindow()
         {
@@ -87,8 +89,6 @@ namespace DigitInterface
             return B.IsChecked.HasValue && B.IsChecked.Value;
         }
 
-        AzureClassifier AzCl = new AzureClassifier();
-
         public IClassifier CurrentClassifier
         {
             get
@@ -96,6 +96,7 @@ namespace DigitInterface
                 if (Yes(FS)) return ((IClassifier)Cl);
                 if (Yes(CS)) return ((IClassifier)Knn);
                 if (Yes(ML)) return ((IClassifier)AzCl);
+                if (Yes(CNTK)) return ((IClassifier)Cntk);
                 return ((IClassifier)Cl);
             }
         }

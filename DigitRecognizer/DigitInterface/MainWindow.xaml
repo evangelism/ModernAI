@@ -21,6 +21,7 @@
             <RadioButton x:Name="FS" GroupName="Alg" IsChecked="True">F#</RadioButton>
             <RadioButton x:Name="CS" GroupName="Alg">C#</RadioButton>
             <RadioButton x:Name="ML" GroupName="Alg">AzureML</RadioButton>
+            <RadioButton x:Name="CNTK" GroupName="Alg">CNTK</RadioButton>
             <Button Tag="-1" Click="Navigate">&lt;&lt;</Button>
             <Button Tag="0" Click="Navigate">O</Button>
             <Button Tag="1" Click="Navigate">&gt;&gt;</Button>
