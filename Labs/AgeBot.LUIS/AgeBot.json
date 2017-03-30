@@ -1,0 +1,108 @@
+{
+  "luis_schema_version": "2.0.0",
+  "versionId": "0.1",
+  "name": "AgeBot",
+  "desc": "",
+  "culture": "en-us",
+  "intents": [
+    {
+      "name": "GenderCount"
+    },
+    {
+      "name": "Hello"
+    },
+    {
+      "name": "None"
+    },
+    {
+      "name": "Statistics"
+    }
+  ],
+  "entities": [
+    {
+      "name": "Gender"
+    }
+  ],
+  "composites": [],
+  "closedLists": [],
+  "bing_entities": [],
+  "actions": [],
+  "model_features": [],
+  "regex_features": [],
+  "utterances": [
+    {
+      "text": "greetings",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
+      "text": "hi",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
+      "text": "hello",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
+      "text": "show me the stats",
+      "intent": "Statistics",
+      "entities": []
+    },
+    {
+      "text": "show me statistics",
+      "intent": "Statistics",
+      "entities": []
+    },
+    {
+      "text": "what's the statistics",
+      "intent": "Statistics",
+      "entities": []
+    },
+    {
+      "text": "how many female faces have you seen?",
+      "intent": "GenderCount",
+      "entities": [
+        {
+          "entity": "Gender",
+          "startPos": 9,
+          "endPos": 14
+        }
+      ]
+    },
+    {
+      "text": "how many male faces?",
+      "intent": "GenderCount",
+      "entities": [
+        {
+          "entity": "Gender",
+          "startPos": 9,
+          "endPos": 12
+        }
+      ]
+    },
+    {
+      "text": "count females",
+      "intent": "GenderCount",
+      "entities": [
+        {
+          "entity": "Gender",
+          "startPos": 6,
+          "endPos": 12
+        }
+      ]
+    },
+    {
+      "text": "how many males",
+      "intent": "GenderCount",
+      "entities": [
+        {
+          "entity": "Gender",
+          "startPos": 9,
+          "endPos": 13
+        }
+      ]
+    }
+  ]
+}
