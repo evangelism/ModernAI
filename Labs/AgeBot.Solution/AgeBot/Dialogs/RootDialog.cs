@@ -28,10 +28,6 @@ namespace AgeBot.Dialogs
                 var res = await cli.DetectAsync(str,returnFaceAttributes: new FaceAttributeType[]{ FaceAttributeType.Age, FaceAttributeType.Gender });
                 if (res.Length > 0)
                 {
-                    foreach (var x in res)
-                    {
-                        await context.PostAsync($"Age={x.FaceAttributes.Age}, Gender={x.FaceAttributes.Gender}");
-                    }
                 }
                 else await context.PostAsync("No faces");
             }

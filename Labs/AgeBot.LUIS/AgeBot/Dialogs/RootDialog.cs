@@ -9,7 +9,7 @@ using Microsoft.Bot.Builder.Luis.Models;
 
 namespace AgeBot.Dialogs
 {
-    [LuisModel("9e3d0580-7a58-4370-931c-363c69434df0", "c5677ce1bcfd4a46820e6acefbdbda99")]
+    [LuisModel("2e99fbf4-796d-42df-8057-a84991f9e512", "15a65120ca5347b3b35d8397dde5e480")]
     [Serializable]
     public class RootDialog : LuisDialog<object>
     {
@@ -52,14 +52,14 @@ namespace AgeBot.Dialogs
             context.Wait(MessageReceived);
         }
 
-        [LuisIntent("Hello")]
+        [LuisIntent("hello")]
         private async Task Hello(IDialogContext context, LuisResult result)
         {
             await context.PostAsync("Hi there");
             context.Wait(MessageReceived);
         }
 
-        [LuisIntent("Statistics")]
+        [LuisIntent("stats")]
         private async Task Statistics(IDialogContext context, LuisResult result)
         {
             await context.PostAsync($"Processed {count} messages, {100.0 * male / count} male, {100.0 * female / count} females");
@@ -67,13 +67,13 @@ namespace AgeBot.Dialogs
             context.Wait(MessageReceived);
         }
 
-        [LuisIntent("GenderCount")]
+        [LuisIntent("gendercount")]
         private async Task Count(IDialogContext context, LuisResult result)
         {
             var gender = "male";
             foreach(var e in result.Entities)
             {
-                if (e.Type == "Gender") gender = e.Entity;
+                if (e.Type == "gender") gender = e.Entity;
             }
             if (gender.ToLower().StartsWith("male"))
             {
