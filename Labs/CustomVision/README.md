@@ -26,7 +26,8 @@ Custom Vision API может научиться распознавать разные классы изображений, наприм
 imdownload <bing key> "<search term>" [<image mask with #> <number of images>]
 ```
 Для использования необходим ключ для использования Bing Search API - его можно получить [вот на этой странице](https://azure.microsoft.com/en-us/try/cognitive-services/?api=bing-web-search-api)
-или через свою облачную подписку (создав объект Cognitive Services -> Search).
+или через свою облачную подписку (создав объект Cognitive Services -> Search). Для мероприятий вы можете попробовать использовать следующий
+код: `46e12b3bfaa042128641ce04f72f7bbc`.
 
 Например, для скачивания картинок с чёрными кошками, используем
 ```
