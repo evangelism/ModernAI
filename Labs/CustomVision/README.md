@@ -20,7 +20,7 @@ Custom Vision API может научитьс€ распознавать разные классы изображений, наприм
 
 ## ѕолучаем обучающие изображени€
 
-ƒл€ автоматического скачивани€ изображений из топовых результатов Bing Search можно воспользоватьс€ утилитой [imdownload.exe](./imdownload.exe).
+ƒл€ автоматического скачивани€ изображений из топовых результатов Bing Search можно воспользоватьс€ утилитой [imdownload.exe](./imdownload.exe?raw=true).
 ‘ормат вызовы утилиты:
 ```
 imdownload <bing key> "<search term>" [<image mask with #> <number of images>]
