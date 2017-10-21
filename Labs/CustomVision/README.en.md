@@ -23,7 +23,7 @@ Good examples of problems can be:
 ## Getting training images
 
 One of the ways to get training images is to use Bing Image Search. To automatically download top Bing Image Search results, you can use the
-[imdownload.exe](./imdownload.exe?raw=true) utility provided.
+[imdownload.exe](./imdownload.zip?raw=true) utility provided. Download the ZIP file and unpack it somewhere.
 You can call it from the command line in the following way:
 ```
 imdownload <bing key> "<search term>" [<image mask with #> <number of images>]
