@@ -7,7 +7,7 @@ type IClassifier =
     abstract member Classify : int[] -> int
 
 type Classifier() = 
-    let train_set = @"d:\TEMP\DigitReco\Data\train.csv"
+    let train_set = @"c:\DEMO\Data\train.csv"
     let read_file fn = File.ReadAllLines(fn)
     let data = read_file train_set
                |> Seq.skip 1

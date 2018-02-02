@@ -25,7 +25,7 @@ namespace DigitInterface.CSClassifier
 
         protected Digit[] Data;
 
-        public KNNClassifier(string fn = @"d:\TEMP\DigitReco\Data\train.csv")
+        public KNNClassifier(string fn = @"c:\DEMO\Data\train.csv")
         {
             var lines = File.ReadLines(fn).Skip(1);
             Data = (from x in lines

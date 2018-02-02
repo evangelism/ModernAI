@@ -41,7 +41,7 @@ namespace Evangelism.Cognitive.CustomVision
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("Prediction-Key", PredictionKey);
 
-            string url = $"https://southcentralus.api.cognitive.microsoft.com/customvision/v1.0/prediction/{ModelId}/image";
+            string url = $"https://southcentralus.api.cognitive.microsoft.com/customvision/v1.1/prediction/{ModelId}/image";
 
             HttpResponseMessage response;
             string res;
@@ -53,10 +53,13 @@ namespace Evangelism.Cognitive.CustomVision
             }
             dynamic z = Newtonsoft.Json.JsonConvert.DeserializeObject(res);
             var r = new TagCollection();
-            foreach(var x in z.Predictions)
+            try
             {
-                r.Add(new TagInfo() { Name = x.Tag, Probability = x.Probability });
-            }
+                foreach (var x in z.Predictions)
+                {
+                    r.Add(new TagInfo() { Name = x.Tag, Probability = x.Probability });
+                }
+            } catch { }
             return r;
         }
     }

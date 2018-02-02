@@ -35,13 +35,13 @@ namespace CustomVisionBot.Dialogs
                     var hcli = new HttpClient();
                     var str = await hcli.GetStreamAsync(activity.Attachments[0].ContentUrl);
                     var res = await cli.AnalyseAsync(str);
-                    var top = res.Top;
-                    if (top.Probability < 0)
+                    if (res.Count<=0 || res.Top.Probability < 0)
                     {
-                        await context.PostAsync("No object found");
+                        await context.PostAsync("No object found. Make sure you set the default iteration to use through custom vision portal.");
                     }
                     else
                     {
+                        var top = res.Top;
                         await context.PostAsync($"I found brand {top.Name} with confidence={top.Probability}");
                     }
                 }
@@ -57,6 +57,7 @@ namespace CustomVisionBot.Dialogs
                 {
                     ModelId = t[0];
                     PredictionKey = t[1];
+                    await context.PostAsync($"Set model id={ModelId}, key={PredictionKey}");
                 }
             }
             context.Wait(MessageReceivedAsync);
